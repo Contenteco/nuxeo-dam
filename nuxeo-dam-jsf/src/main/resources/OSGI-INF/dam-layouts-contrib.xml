@@ -86,7 +86,8 @@
         <property name="ajaxPanelId">damPanelRight</property>
       </properties>
       <subWidgetRefs>
-        <widget>damAssetView</widget>
+        <widget>damAssetViewActions</widget>
+        <widget>damAssetViewTabs</widget>
       </subWidgetRefs>
     </widget>
 
@@ -241,6 +242,14 @@
         <property name="useAjaxForm">true</property>
         <property name="ignoreTemplateProperty">true</property>
         <property name="maxActionsNumber">9</property>
+      </properties>
+    </widget>
+
+    <widget name="damAssetViewTabs" type="currentDocumentTabsWithForms">
+      <properties widgetMode="view">
+        <property name="category">DAM_ASSET_VIEW_TABS</property>
+        <property name="actionsDisplay">links</property>
+        <property name="useAjaxForm">true</property>
       </properties>
     </widget>
 
@@ -558,18 +567,19 @@
     </action>
 
     <!-- Asset view -->
-    <action id="damAssetViewActions" type="widget" order="100">
-      <category>DAM_PANEL_RIGHT</category>
+    <action id="damAssetViewSummaryTab" link="/dam/incl/tabs/asset_view_summary.xhtml"
+      label="action.view.summary" order="100" type="rest_document_link">
+      <category>DAM_ASSET_VIEW_TABS</category>
       <properties>
-        <property name="widgetName">damAssetViewActions</property>
+        <property name="ajaxSupport">true</property>
       </properties>
       <filter-id>hasAssetFacet</filter-id>
     </action>
-
-    <action id="damAssetViewActions" type="widget" order="100">
-      <category>DAM_PANEL_RIGHT</category>
+    <action id="damAssetViewSummaryTab2" link="/incl/tabs/document_history.xhtml"
+      label="History" order="200" type="rest_document_link">
+      <category>DAM_ASSET_VIEW_TABS</category>
       <properties>
-        <property name="widgetName">damAssetViewActions</property>
+        <property name="ajaxSupport">true</property>
       </properties>
       <filter-id>hasAssetFacet</filter-id>
     </action>
