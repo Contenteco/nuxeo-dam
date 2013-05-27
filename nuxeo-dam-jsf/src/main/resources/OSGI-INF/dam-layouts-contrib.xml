@@ -54,7 +54,7 @@
 
     <widgetType name="toggleableDocumentLayoutWithForms">
       <configuration>
-        <sinceVersion>5.6</sinceVersion>
+        <sinceVersion>5.7</sinceVersion>
         <title>Toggleable document layout</title>
         <description>
           This widget displays a form layout which mode can be
