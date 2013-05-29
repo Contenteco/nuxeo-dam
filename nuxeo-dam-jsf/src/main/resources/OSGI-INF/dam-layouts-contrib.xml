@@ -129,7 +129,7 @@
     <!-- Main actions widgets -->
     <widget name="damSearchForm" type="currentDocumentActions">
       <properties widgetMode="view">
-        <property name="category">DAM_PANEL_LEFT</property>
+        <property name="category">#{damSearchActions.isOnAssetPermalink() ? 'DAM_PERMALINK_PANEL_LEFT' : 'DAM_PANEL_LEFT'}</property>
       </properties>
     </widget>
 
@@ -226,6 +226,17 @@
         <property name="styleClass">searchFilterActions</property>
         <property name="useAjaxForm">true</property>
       </properties>
+    </widget>
+
+    <!-- Permalink left panel -->
+    <widget name="damPermalinkBackToSearch" type="template">
+      <properties widgetMode="any">
+        <property name="template">/dam/widgets/dam_permalink_back_to_search_widget_template.xhtml</property>
+        <property name="ajaxReRender">damPanelLeft,damPanelCenter,damPanelRight</property>
+      </properties>
+      <controls mode="any">
+        <control name="requireSurroundingForm">true</control>
+      </controls>
     </widget>
 
     <!-- Search results -->
@@ -576,6 +587,14 @@
       <category>DAM_PANEL_LEFT</category>
       <properties>
         <property name="widgetName">damSearchLayout</property>
+      </properties>
+    </action>
+
+    <!-- Permalink left -->
+    <action id="damPermalinkBackToSearch" type="widget" order="100">
+      <category>DAM_PERMALINK_PANEL_LEFT</category>
+      <properties>
+        <property name="widgetName">damPermalinkBackToSearch</property>
       </properties>
     </action>
 

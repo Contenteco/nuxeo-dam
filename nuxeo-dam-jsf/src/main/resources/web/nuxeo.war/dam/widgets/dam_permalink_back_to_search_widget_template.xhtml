@@ -1,0 +1,13 @@
+<c:if test="true"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:c="http://java.sun.com/jstl/core"
+  xmlns:nxu="http://nuxeo.org/nxweb/util"
+  xmlns:a4j="http://richfaces.org/a4j">
+
+  <a4j:commandLink id="backToSearch"
+    action="#{damSearchActions.backToSearch()}"
+    reRender="#{widgetProperty_ajaxReRender}">
+    <h:outputText value="#{messages['label.dam.back.to.search']}" />
+  </a4j:commandLink>
+
+</c:if>

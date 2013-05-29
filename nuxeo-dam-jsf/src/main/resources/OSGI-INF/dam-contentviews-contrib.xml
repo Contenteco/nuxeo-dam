@@ -122,6 +122,47 @@
       <actions category="DAM_SEARCHES_CURRENT_SELECTION_LIST" />
     </contentView>
 
+    <contentView name="dam_permalink">
+      <showTitle>false</showTitle>
+
+      <emptySentence>label.content.empty.search</emptySentence>
+      <translateEmptySentence>true</translateEmptySentence>
+
+      <coreQueryPageProvider>
+        <property name="coreSession">#{documentManager}</property>
+        <pattern>
+          SELECT * FROM Document WHERE ecm:uuid = ?
+          AND ecm:currentLifeCycleState != 'deleted'
+        </pattern>
+        <parameter>#{currentDocument.id}</parameter>
+        <sort column="dc:title" ascending="true" />
+        <pageSize>1</pageSize>
+      </coreQueryPageProvider>
+
+      <showPageSizeSelector>false</showPageSizeSelector>
+      <useGlobalPageSize>false</useGlobalPageSize>
+      <showRefreshCommand>false</showRefreshCommand>
+      <refresh>
+        <event>documentChanged</event>
+        <event>documentChildrenChanged</event>
+      </refresh>
+      <cacheKey>only_one_cache</cacheKey>
+      <cacheSize>1</cacheSize>
+
+      <resultLayouts>
+        <layout name="dam_box_listing_ajax" title="label.dam.box.listing.title"
+          translateTitle="true" iconPath="/icons/document_listing_icon_2_columns_icon.png"
+          showCSVExport="false" showPDFExport="false" showSyndicationLinks="false" />
+        <layout name="dam_listing_ajax" title="label.dam.listing.title"
+          translateTitle="true" iconPath="/icons/document_listing_icon.png"
+          showCSVExport="false" showPDFExport="false" showSyndicationLinks="false" />
+      </resultLayouts>
+
+      <selectionList>CURRENT_SELECTION</selectionList>
+      <actions category="DAM_CURRENT_SELECTION_LIST" />
+
+    </contentView>
+
   </extension>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"

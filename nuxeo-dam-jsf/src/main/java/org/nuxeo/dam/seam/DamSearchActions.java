@@ -19,6 +19,7 @@ package org.nuxeo.dam.seam;
 
 import static org.jboss.seam.ScopeType.CONVERSATION;
 import static org.jboss.seam.annotations.Install.FRAMEWORK;
+import static org.nuxeo.dam.DamConstants.PERMALINK_CONTENT_VIEW_NAME;
 import static org.nuxeo.dam.DamConstants.SAVED_DAM_SEARCHES_PROVIDER_NAME;
 import static org.nuxeo.dam.DamConstants.SHARED_DAM_SEARCHES_PROVIDER_NAME;
 import static org.nuxeo.ecm.platform.contentview.jsf.ContentView.CONTENT_VIEW_PAGE_CHANGED_EVENT;
@@ -400,7 +401,7 @@ public class DamSearchActions implements Serializable {
      * Compute a permanent link for the current search.
      */
     @SuppressWarnings("unchecked")
-    public String getPermanentLinkUrl() throws ClientException,
+    public String getSearchPermanentLinkUrl() throws ClientException,
             UnsupportedEncodingException {
         String currentContentViewName = getCurrentContentViewName();
         DocumentModel currentDocument = navigationContext.getCurrentDocument();
@@ -419,6 +420,18 @@ public class DamSearchActions implements Serializable {
         return RestHelper.addCurrentConversationParameters(url);
     }
 
+    public String getAssetPermanentLinkUrl() throws ClientException {
+        DocumentModel currentDocument = navigationContext.getCurrentDocument();
+        DocumentView docView = computeDocumentView(currentDocument);
+        docView.setViewId("assets");
+        docView.addParameter(CONTENT_VIEW_NAME_PARAMETER,
+                PERMALINK_CONTENT_VIEW_NAME);
+        ContentView contentView = contentViewActions.getContentView(PERMALINK_CONTENT_VIEW_NAME);
+        DocumentViewCodecManager documentViewCodecManager = Framework.getLocalService(DocumentViewCodecManager.class);
+        return documentViewCodecManager.getUrlFromDocumentView(DAM_CODEC,
+                docView, true, BaseURL.getBaseURL());
+    }
+
     protected DocumentView computeDocumentView(DocumentModel doc) {
         if (doc != null) {
             return new DocumentViewImpl(new DocumentLocationImpl(
@@ -435,6 +448,14 @@ public class DamSearchActions implements Serializable {
             throws ClientException {
         restHelper.initContextFromRestRequest(docView);
         return "assets";
+    }
+
+    public boolean isOnAssetPermalink() {
+        return PERMALINK_CONTENT_VIEW_NAME.equals(getCurrentContentViewName());
+    }
+
+    public void backToSearch() {
+        currentContentViewName = null;
     }
 
     @Observer(value = { CONTENT_VIEW_PAGE_CHANGED_EVENT,
